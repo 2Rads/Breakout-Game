@@ -16,6 +16,7 @@ namespace Breakout_Game
         private int row = 8;
         private int column = 15;
         private Paddle paddle;
+        private Ball ball;
         public BreakoutForm()
         {
             InitializeComponent();
@@ -31,6 +32,7 @@ namespace Breakout_Game
                 }
             }
             paddle = new Paddle(DisplayBox.Size);
+            ball = new Ball(DisplayBox.Size);
             //calls the paint function to display
             DisplayBox.Invalidate();
             DisplayBox.Update();
@@ -49,7 +51,8 @@ namespace Breakout_Game
             brush = new SolidBrush(Color.White);
             e.Graphics.FillRectangle(brush, paddle.paddle);
 
-
+            Pen pen = new Pen(Color.White, 1);
+            e.Graphics.FillEllipse(brush, ball.ball);
         }
 
         private void BreakoutForm_KeyDown(object sender, KeyEventArgs e)
@@ -134,5 +137,15 @@ namespace Breakout_Game
             }
         }
 
+    }
+
+    public class Ball
+    {
+
+        public RectangleF ball { get; private set; }    //treating ball as rectangle, helps with collision detection.
+        public Ball(Size size)
+        {
+            ball = new RectangleF(new PointF(size.Width / 2 - 15, size.Height/2), new SizeF(30, 30));
+        }
     }
 }

@@ -29,7 +29,9 @@ namespace Breakout_Game
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.DisplayBox = new System.Windows.Forms.PictureBox();
+            this.Timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DisplayBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,6 +43,12 @@ namespace Breakout_Game
             this.DisplayBox.TabIndex = 0;
             this.DisplayBox.TabStop = false;
             this.DisplayBox.Paint += new System.Windows.Forms.PaintEventHandler(this.DisplayBox_Paint);
+            // 
+            // Timer
+            // 
+            this.Timer.Enabled = true;
+            this.Timer.Interval = 15;
+            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // BreakoutForm
             // 
@@ -63,6 +71,7 @@ namespace Breakout_Game
         #endregion
 
         private System.Windows.Forms.PictureBox DisplayBox;
+        private System.Windows.Forms.Timer Timer;
     }
 }
 

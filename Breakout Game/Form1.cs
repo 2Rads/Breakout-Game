@@ -33,9 +33,6 @@ namespace Breakout_Game
             }
             paddle = new Paddle(DisplayBox.Size);
             ball = new Ball(DisplayBox.Size);
-            //calls the paint function to display
-            DisplayBox.Invalidate();
-            DisplayBox.Update();
         }
         private void DisplayBox_Paint(object sender, PaintEventArgs e)
         {
@@ -60,15 +57,16 @@ namespace Breakout_Game
             if(e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
                     paddle.move(1, DisplayBox);
-                    DisplayBox.Invalidate();
-                    DisplayBox.Update();
             }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
                     paddle.move(-1, DisplayBox);
-                    DisplayBox.Invalidate();
-                    DisplayBox.Update();
             }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ball.move();
         }
     }
     public class Block
@@ -141,11 +139,17 @@ namespace Breakout_Game
 
     public class Ball
     {
-
         public RectangleF ball { get; private set; }    //treating ball as rectangle, helps with collision detection.
+        private PointF velocity;
+                
         public Ball(Size size)
         {
             ball = new RectangleF(new PointF(size.Width / 2 - 15, size.Height/2), new SizeF(30, 30));
+            velocity = new PointF(2, 2);
+        }
+        public void move()
+        {
+            ball = new RectangleF(new PointF(ball.X + velocity.X, ball.Y + velocity.Y), new SizeF(30, 30));
         }
     }
 }

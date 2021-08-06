@@ -1,7 +1,7 @@
 ﻿
 namespace Breakout_Game
 {
-    partial class Form1
+    partial class Breakout
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,10 +29,21 @@ namespace Breakout_Game
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Breakout
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(1064, 681);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Breakout";
+            this.Text = "Breakout Game";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

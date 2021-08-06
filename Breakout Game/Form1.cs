@@ -10,12 +10,11 @@ using System.Windows.Forms;
 
 namespace Breakout_Game
 {
-    public partial class Form1 : Form
+    public partial class Breakout : Form
     {
-        public Form1()
+        public Breakout()
         {
             InitializeComponent();
         }
-
     }
 }

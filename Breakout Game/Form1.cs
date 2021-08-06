@@ -27,7 +27,7 @@ namespace Breakout_Game
             {
                 for(int j = 0; j< row; j++)
                 {
-                    blocks[i, j] = new Block(i, j, DisplayBox.Size);
+                    blocks[i, j] = new Block(i, j);
                 }
             }
             paddle = new Paddle(DisplayBox.Size);
@@ -51,6 +51,22 @@ namespace Breakout_Game
 
 
         }
+
+        private void BreakoutForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                    paddle.move(1, DisplayBox);
+                    DisplayBox.Invalidate();
+                    DisplayBox.Update();
+            }
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+            {
+                    paddle.move(-1, DisplayBox);
+                    DisplayBox.Invalidate();
+                    DisplayBox.Update();
+            }
+        }
     }
     public class Block
     {
@@ -58,7 +74,7 @@ namespace Breakout_Game
         public Color Colour { get; private set; }
         public bool hit { get; private set; }
 
-        public Block(int column, int row, Size size)
+        public Block(int column, int row)
         {
             int RowMultiplier = 35;//appropriate sizes for width and height of a block
             int ColumnMultiplier = 68;
@@ -71,7 +87,7 @@ namespace Breakout_Game
         }
         private static Color GetColour(int row)
         {
-            switch (row) 
+            switch (row)
             {
                 case 0:
                     return Color.Pink;
@@ -87,8 +103,9 @@ namespace Breakout_Game
                     return Color.Blue;
                 case 6:
                     return Color.Purple;
+                default:
+                    return Color.Aqua;
             }
-            return Color.Aqua;
         }
     }
     public class Paddle
@@ -99,5 +116,23 @@ namespace Breakout_Game
         
             paddle = new RectangleF(new PointF( size.Width/2 - 75, size.Height - 20), new SizeF(150, 20));
         }
+        public void move(int direction, PictureBox DisplayBox)
+        {
+            int speed = 8;
+            if (paddle.Left >= 0 && paddle.Right <= DisplayBox.Right)
+            {
+                paddle = new RectangleF(new PointF(paddle.X + direction * speed, paddle.Y), new SizeF(150, 20));
+            }
+            //DisplayBox.Right is 11 more that it should be
+            if (paddle.Right > DisplayBox.Right-11)
+            {
+                paddle = new RectangleF(new PointF(DisplayBox.Right - paddle.Size.Width - 11, paddle.Y), new SizeF(150, 20));
+            }
+            if (paddle.Left < 0)
+            {
+                paddle = new RectangleF(new PointF(0, paddle.Y), new SizeF(150, 20));
+            }
+        }
+
     }
 }

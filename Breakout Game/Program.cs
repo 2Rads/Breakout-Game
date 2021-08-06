@@ -17,7 +17,7 @@ namespace Breakout_Game
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Breakout());
+            Application.Run(new BreakoutForm());
         }
     }
 }

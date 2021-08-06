@@ -47,8 +47,6 @@ namespace Breakout_Game
             }
             brush = new SolidBrush(Color.White);
             e.Graphics.FillRectangle(brush, paddle.paddle);
-
-            Pen pen = new Pen(Color.White, 1);
             e.Graphics.FillEllipse(brush, ball.ball);
         }
 
@@ -66,8 +64,19 @@ namespace Breakout_Game
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            DetectBallPaddleCollision();
             ball.move();
+            DisplayBox.Invalidate();
+            DisplayBox.Update();
         }
+        private void DetectBallPaddleCollision()
+        {
+            if (ball.ball.IntersectsWith(paddle.paddle) && ball.ball.Bottom <= paddle.paddle.Top)
+            {
+                ball.ChangeDirection(0,1);
+            }
+        }
+
     }
     public class Block
     {
@@ -150,6 +159,18 @@ namespace Breakout_Game
         public void move()
         {
             ball = new RectangleF(new PointF(ball.X + velocity.X, ball.Y + velocity.Y), new SizeF(30, 30));
+        }
+        public void ChangeDirection(int x, int y)
+        {
+            //1 means change direction, 0 means don't change dirction
+            if(x == 1)
+            {
+                velocity = new PointF(-velocity.X, velocity.Y);
+            }
+            if (y == 1)
+            {
+                velocity = new PointF(velocity.X, -velocity.Y);
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Breakout_Game
             Colour = GetColour(row);
             hit = false;
 
-            block = new RectangleF(new PointF(column * (ColumnMultiplier+1), row * RowMultiplier), new SizeF(ColumnMultiplier, RowMultiplier));
+            block = new RectangleF(new PointF(column * (ColumnMultiplier + 1), row * RowMultiplier), new SizeF(ColumnMultiplier, RowMultiplier));
         }
         private static Color GetColour(int row)
         {

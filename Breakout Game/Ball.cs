@@ -38,11 +38,11 @@ namespace Breakout_Game
             double sinangle = Math.Sin(angle);
             if (ratio > 0.8)
             {
-                velocity = new PointF((float)(Math.Sqrt(3)  * speed / 2), (float)(- speed / 2));
+                velocity = new PointF((float)(Math.Sqrt(3) * speed / 2), (float)(-speed / 2));
             }
             else if (ratio < -0.8)
             {
-                velocity = new PointF((float)(-Math.Sqrt(3)  * speed / 2), (float)(- speed / 2));
+                velocity = new PointF((float)(-Math.Sqrt(3) * speed / 2), (float)(-speed / 2));
             }
             else
             {

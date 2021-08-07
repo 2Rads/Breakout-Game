@@ -6,21 +6,25 @@ namespace Breakout_Game
 {
     public partial class BreakoutForm : Form
     {
-        private Block[,] blocks = new Block[15, 8];
-        private int row = 8;
-        private int column = 15;
+        private readonly int ROW = 8;
+        private readonly int COLUMN = 10;
+        private int lives = 5;
+
+        private Block[,] blocks;
         private Paddle paddle;
         private Ball ball;
-        private int lives = 5;
+
         public BreakoutForm()
         {
             InitializeComponent();
+
+            blocks = new Block[COLUMN, ROW];
             //creates 8 rows with 15 columns
-            for (int i = 0; i < column; i++)
+            for (int i = 0; i < COLUMN; i++)
             {
-                for (int j = 0; j < row; j++)
+                for (int j = 0; j < ROW; j++)
                 {
-                    blocks[i, j] = new Block(i, j);
+                    blocks[i, j] = new Block(i, j, DisplayBox.Size, COLUMN, ROW);
                 }
             }
             paddle = new Paddle(DisplayBox.Size);
@@ -29,9 +33,9 @@ namespace Breakout_Game
         private void DisplayBox_Paint(object sender, PaintEventArgs e)
         {
             Brush brush;
-            for (int i = 0; i < column; i++)
+            for (int i = 0; i < COLUMN; i++)
             {
-                for (int j = 0; j < row; j++)
+                for (int j = 0; j < ROW; j++)
                 {
                     if (blocks[i, j] != null)
                     {
@@ -96,9 +100,9 @@ namespace Breakout_Game
         }
         private void DetectBallBlockCollision()
         {
-            for (int i = 0; i < column; i++)
+            for (int i = 0; i < COLUMN; i++)
             {
-                for (int j = 0; j < row; j++)
+                for (int j = 0; j < ROW; j++)
                 {
                     if (blocks[i, j] != null /*&& ball.ball.IntersectsWith(blocks[i, j].block)*/)
                     {

@@ -31,7 +31,8 @@ namespace Breakout_Game
         }
         public void ChangeAngle(float ratio)
         {
-            double speed = GetSpeed(velocity.X, velocity.Y);
+            double speed = GetSpeed(velocity.X, velocity.Y) * 1.1;
+            speed = Math.Min(speed, 10);
 
             double angle = Math.PI * ratio * 70 / 180.0;
             double cosangle = -Math.Cos(angle);

@@ -9,7 +9,7 @@ namespace Breakout_Game
 
         public Block(int column, int row, Size size, int MaxColumn, int MaxRow)
         {
-            int RowMultiplier = size.Height/(MaxRow * 2);//appropriate size for height of a block
+            int RowMultiplier = size.Height / (MaxRow * 2);//appropriate size for height of a block
             int ColumnMultiplier = size.Width / MaxColumn;//appropriate size for Width of a block
 
 

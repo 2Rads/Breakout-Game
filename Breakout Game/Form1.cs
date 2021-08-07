@@ -66,6 +66,7 @@ namespace Breakout_Game
             DetectBallBlockCollision();
             DetectBallPaddleCollision();
             DetectBallAndEdges();
+
             ball.move();
             DisplayBox.Invalidate();
             DisplayBox.Update();
@@ -93,9 +94,14 @@ namespace Breakout_Game
             {
                 ball.ChangeDirection(0, 1);
             }
-            if (ball.ball.Bottom >= DisplayBox.Height)
+            if (ball.IsOffScreen(DisplayBox.Size.Height))
             {
                 lives--;
+                if (lives == 0)
+                {
+                    return;//make lose screen;
+                }
+                ball = new Ball(DisplayBox.Size);
             }
         }
         private void DetectBallBlockCollision()

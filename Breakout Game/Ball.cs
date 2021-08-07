@@ -7,7 +7,6 @@ namespace Breakout_Game
     {
         public RectangleF ball { get; private set; }    //treating ball as rectangle, helps with collision detection.
         public PointF velocity { get; private set; }
-
         public Ball(Size size)
         {
             ball = new RectangleF(new PointF(size.Width / 2 - 15, size.Height / 2), new SizeF(30, 30));
@@ -54,6 +53,11 @@ namespace Breakout_Game
         private double GetSpeed(float x, float y)
         {
             return Math.Sqrt(x * x + y * y);
+        }
+
+        public bool IsOffScreen(int height)
+        {
+            return ball.Bottom >= height;
         }
     }
 }

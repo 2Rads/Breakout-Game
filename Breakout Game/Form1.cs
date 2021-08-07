@@ -70,7 +70,13 @@ namespace Breakout_Game
         {
             if (ball.ball.IntersectsWith(paddle.paddle) && /*ball.ball.Bottom <= paddle.paddle.Top &&*/ ball.velocity.Y > 0)
             {
-                ball.ChangeDirection(0, 1);
+
+                float BallCentre = ball.ball.X + ball.ball.Width / 2;
+                float PaddleCentre = paddle.paddle.X + paddle.paddle.Width / 2;
+
+                float ratio = (BallCentre - PaddleCentre) / (paddle.paddle.Width / 2);
+
+                ball.ChangeAngle(ratio);
             }
         }
         private void DetectBallAndEdges()
@@ -94,7 +100,7 @@ namespace Breakout_Game
             {
                 for (int j = 0; j < row; j++)
                 {
-                    if(blocks[i,j] != null /*&& ball.ball.IntersectsWith(blocks[i, j].block)*/)
+                    if (blocks[i, j] != null /*&& ball.ball.IntersectsWith(blocks[i, j].block)*/)
                     {
 
                         RectangleF intersection = RectangleF.Intersect(ball.ball, blocks[i, j].block);
@@ -104,7 +110,7 @@ namespace Breakout_Game
                         }
                         if (intersection.Height > intersection.Width)
                         {
-                            
+
                             if (ball.ball.Right == intersection.Right && ball.velocity.X > 0)
                             {
                                 ball.ChangeDirection(1, 0);
@@ -116,7 +122,7 @@ namespace Breakout_Game
                                 blocks[i, j] = null;
                             }
                         }
-                        else if(intersection.Width > intersection.Height)
+                        else
                         {
                             if (ball.ball.Top == intersection.Top && ball.velocity.Y < 0)
                             {

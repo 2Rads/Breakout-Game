@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Breakout_Game
 {
@@ -27,6 +28,31 @@ namespace Breakout_Game
             {
                 velocity = new PointF(velocity.X, -velocity.Y);
             }
+        }
+        public void ChangeAngle(float ratio)
+        {
+            double speed = GetSpeed(velocity.X, velocity.Y);
+
+            double angle = Math.PI * ratio * 70 / 180.0;
+            double cosangle = -Math.Cos(angle);
+            double sinangle = Math.Sin(angle);
+            if (ratio > 0.8)
+            {
+                velocity = new PointF((float)(Math.Sqrt(3)  * speed / 2), (float)(- speed / 2));
+            }
+            else if (ratio < -0.8)
+            {
+                velocity = new PointF((float)(-Math.Sqrt(3)  * speed / 2), (float)(- speed / 2));
+            }
+            else
+            {
+                velocity = new PointF((float)(sinangle * speed), (float)(cosangle * speed));
+            }
+
+        }
+        private double GetSpeed(float x, float y)
+        {
+            return Math.Sqrt(x * x + y * y);
         }
     }
 }

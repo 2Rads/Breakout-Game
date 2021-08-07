@@ -63,6 +63,7 @@ namespace Breakout_Game
             this.Name = "BreakoutForm";
             this.Text = "Breakout Game";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BreakoutForm_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BreakoutForm_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.DisplayBox)).EndInit();
             this.ResumeLayout(false);
 

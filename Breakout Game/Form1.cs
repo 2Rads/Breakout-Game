@@ -10,6 +10,9 @@ namespace Breakout_Game
         private readonly int COLUMN = 10;
         private int lives = 5;
 
+        private bool LEFT = false;
+        private bool RIGHT = false;
+
         private Block[,] blocks;
         private Paddle paddle;
         private Ball ball;
@@ -53,11 +56,11 @@ namespace Breakout_Game
         {
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
-                paddle.move(1, DisplayBox);
+                RIGHT = true;
             }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
-                paddle.move(-1, DisplayBox);
+                LEFT = true;
             }
         }
 
@@ -66,8 +69,11 @@ namespace Breakout_Game
             DetectBallBlockCollision();
             DetectBallPaddleCollision();
             DetectBallAndEdges();
-
             ball.move();
+
+            if (LEFT) paddle.move(-1, DisplayBox);
+            if (RIGHT) paddle.move(1, DisplayBox);
+
             DisplayBox.Invalidate();
             DisplayBox.Update();
         }
@@ -97,7 +103,7 @@ namespace Breakout_Game
             if (ball.IsOffScreen(DisplayBox.Size.Height))
             {
                 lives--;
-                if (lives == 0)
+                if (lives <= 0)
                 {
                     return;//make lose screen;
                 }
@@ -193,5 +199,16 @@ namespace Breakout_Game
             }
         }
 
+        private void BreakoutForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                RIGHT = false;
+            }
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+            {
+                LEFT = false;
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace Breakout_Game
     public class Paddle
     {
         public RectangleF paddle { get; private set; }
-        private readonly int Length = 150;
+        private readonly int Length = 200;
         public Paddle(Size size)
         {
 

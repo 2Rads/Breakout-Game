@@ -103,8 +103,10 @@ namespace Breakout_Game
             if (ball.IsOffScreen(DisplayBox.Size.Height))
             {
                 lives--;
+                LivesLbl.Text = $"Lives: {lives}";
                 if (lives <= 0)
                 {
+                    lives++;//keeps lives at 0, remove with lose screen
                     return;//make lose screen;
                 }
                 ball = new Ball(DisplayBox.Size);

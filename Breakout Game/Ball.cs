@@ -10,7 +10,8 @@ namespace Breakout_Game
         public Ball(Size size)
         {
             ball = new RectangleF(new PointF(size.Width / 2 - 15, size.Height / 2), new SizeF(30, 30));
-            velocity = new PointF(2, 2);
+
+            velocity = new PointF(2, 2);//default speed is 2 in x, 2 in y.
         }
         public void move()
         {
@@ -48,13 +49,11 @@ namespace Breakout_Game
             {
                 velocity = new PointF((float)(sinangle * speed), (float)(cosangle * speed));
             }
-
         }
-        private double GetSpeed(float x, float y)
+        private static double GetSpeed(float x, float y)
         {
             return Math.Sqrt(x * x + y * y);
         }
-
         public bool IsOffScreen(int height)
         {
             return ball.Bottom >= height;

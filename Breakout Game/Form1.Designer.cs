@@ -32,14 +32,15 @@ namespace Breakout_Game
             this.components = new System.ComponentModel.Container();
             this.DisplayBox = new System.Windows.Forms.PictureBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
+            this.LivesLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DisplayBox)).BeginInit();
             this.SuspendLayout();
             // 
             // DisplayBox
             // 
-            this.DisplayBox.Location = new System.Drawing.Point(12, 12);
+            this.DisplayBox.Location = new System.Drawing.Point(12, 49);
             this.DisplayBox.Name = "DisplayBox";
-            this.DisplayBox.Size = new System.Drawing.Size(1040, 657);
+            this.DisplayBox.Size = new System.Drawing.Size(1040, 620);
             this.DisplayBox.TabIndex = 0;
             this.DisplayBox.TabStop = false;
             this.DisplayBox.Paint += new System.Windows.Forms.PaintEventHandler(this.DisplayBox_Paint);
@@ -50,12 +51,25 @@ namespace Breakout_Game
             this.Timer.Interval = 15;
             this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
+            // LivesLbl
+            // 
+            this.LivesLbl.AutoSize = true;
+            this.LivesLbl.BackColor = System.Drawing.Color.Transparent;
+            this.LivesLbl.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LivesLbl.ForeColor = System.Drawing.Color.White;
+            this.LivesLbl.Location = new System.Drawing.Point(12, 9);
+            this.LivesLbl.Name = "LivesLbl";
+            this.LivesLbl.Size = new System.Drawing.Size(103, 37);
+            this.LivesLbl.TabIndex = 0;
+            this.LivesLbl.Text = "Lives: 5";
+            // 
             // BreakoutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1064, 681);
+            this.Controls.Add(this.LivesLbl);
             this.Controls.Add(this.DisplayBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -66,6 +80,7 @@ namespace Breakout_Game
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BreakoutForm_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.DisplayBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -73,6 +88,7 @@ namespace Breakout_Game
 
         private System.Windows.Forms.PictureBox DisplayBox;
         private System.Windows.Forms.Timer Timer;
+        private System.Windows.Forms.Label LivesLbl;
     }
 }
 

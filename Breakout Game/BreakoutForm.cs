@@ -6,11 +6,12 @@ namespace Breakout_Game
 {
     public partial class BreakoutForm : Form
     {
-        private readonly int ROW = 8;
-        private readonly int COLUMN = 10;
+        private readonly int ROW = 2;
+        private readonly int COLUMN = 2;
         private int lives;
         private int score;
         private bool paused = false;
+        private bool EndGame = false;
 
         private bool LEFT = false;
         private bool RIGHT = false;
@@ -106,7 +107,7 @@ namespace Breakout_Game
         }
         private void LoseScreen()
         {
-            ball = null;
+            EndGame = true;
             Timer.Enabled = false;
             LoseRestartBtn = new Button();
             LoseRestartBtn.Image = Properties.Resources.RestartImg;
@@ -117,14 +118,29 @@ namespace Breakout_Game
             DisplayBox.Controls.Add(LoseRestartBtn);
             LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
         }
+        private void WinScreen()
+        {
+            EndGame = true;
+            Timer.Enabled = false;
+            LoseRestartBtn = new Button();
+            LoseRestartBtn.Image = Properties.Resources.RestartImg;
+            LoseRestartBtn.Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height);
+            LoseRestartBtn.Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2;
+            LoseRestartBtn.Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2;
+
+            DisplayBox.Controls.Add(LoseRestartBtn);
+            LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
+        }
         private void DetectBallBlockCollision()
         {
+            int BlocksLeft = 0;
             for (int i = 0; i < COLUMN; i++)
             {
                 for (int j = 0; j < ROW; j++)
                 {
                     if (blocks[i, j] != null)
                     {
+                        BlocksLeft++;
                         RectangleF intersection = RectangleF.Intersect(ball.ball, blocks[i, j].block);
                         if (intersection.IsEmpty)
                         {
@@ -152,6 +168,10 @@ namespace Breakout_Game
                         }
                     }
                 }
+            }
+            if (BlocksLeft == 0)
+            {
+                WinScreen();
             }
         }
 
@@ -193,7 +213,7 @@ namespace Breakout_Game
             Timer.Enabled = true;
             PlayPauseBtn.Image = Properties.Resources.Pause;
             paused = false;
-
+            EndGame = false;
             if (LoseRestartBtn != null)
             {
                 LoseRestartBtn.Visible = false;
@@ -201,7 +221,6 @@ namespace Breakout_Game
             }
             ScoreLbl.Text = "Score: 0";
             LivesLbl.Text = $"Lives: {lives}";
-
         }
 
         private void BreakoutForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -211,7 +230,7 @@ namespace Breakout_Game
 
         private void PlayPauseBtn_Click(object sender, EventArgs e)
         {
-            if (lives <= 0)
+            if (EndGame)
             {
                 return;
             }

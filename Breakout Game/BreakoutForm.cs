@@ -8,12 +8,13 @@ namespace Breakout_Game
     {
         private readonly int ROW = 8;
         private readonly int COLUMN = 10;
-        private int lives = 5;
+        private int lives;
         private int score;
 
         private bool LEFT = false;
         private bool RIGHT = false;
 
+        Button LoseRestartBtn;
         private Block[,] blocks;
         private Paddle paddle;
         private Ball ball;
@@ -22,18 +23,7 @@ namespace Breakout_Game
         {
             InitializeComponent();
 
-            blocks = new Block[COLUMN, ROW];
-            //creates 8 rows with 15 columns
-            for (int i = 0; i < COLUMN; i++)
-            {
-                for (int j = 0; j < ROW; j++)
-                {
-                    blocks[i, j] = new Block(i, j, DisplayBox.Size, COLUMN, ROW);
-                }
-            }
-            score = 0;
-            paddle = new Paddle(DisplayBox.Size);
-            ball = new Ball(DisplayBox.Size);
+            LoadDefault();
         }
         private void DisplayBox_Paint(object sender, PaintEventArgs e)
         {
@@ -117,6 +107,14 @@ namespace Breakout_Game
         {
             ball = null;
             Timer.Enabled = false;
+            LoseRestartBtn = new Button();
+            LoseRestartBtn.Image = Properties.Resources.RestartImg;
+            LoseRestartBtn.Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height);
+            LoseRestartBtn.Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2;
+            LoseRestartBtn.Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2;
+            //LoseRestartBtn.Visible = true;
+            DisplayBox.Controls.Add(LoseRestartBtn);
+            LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
         }
         private void DetectBallBlockCollision()
         {
@@ -160,12 +158,42 @@ namespace Breakout_Game
         {
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
+                
                 RIGHT = false;
             }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
                 LEFT = false;
             }
+        }
+
+        private void RestartBtn_Click(object sender, EventArgs e)
+        {
+            LoadDefault();
+        }
+        private void LoadDefault()
+        {
+            blocks = new Block[COLUMN, ROW];
+            //creates 8 rows with 15 columns
+            for (int i = 0; i < COLUMN; i++)
+            {
+                for (int j = 0; j < ROW; j++)
+                {
+                    blocks[i, j] = new Block(i, j, DisplayBox.Size, COLUMN, ROW);
+                }
+            }
+            score = 0;
+            lives = 5;
+            paddle = new Paddle(DisplayBox.Size);
+            ball = new Ball(DisplayBox.Size);
+            Timer.Enabled = true;
+            if (LoseRestartBtn != null)
+            {
+                LoseRestartBtn.Visible = false;
+            }
+            ScoreLbl.Text = "Score: 0";
+            LivesLbl.Text = $"Lives: {lives}";
+
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Breakout_Game
         private readonly int COLUMN = 10;
         private int lives;
         private int score;
+        private bool paused = false;
 
         private bool LEFT = false;
         private bool RIGHT = false;
@@ -190,6 +191,9 @@ namespace Breakout_Game
             paddle = new Paddle(DisplayBox.Size);
             ball = new Ball(DisplayBox.Size);
             Timer.Enabled = true;
+            PlayPauseBtn.Image = Properties.Resources.Pause;
+            paused = false;
+
             if (LoseRestartBtn != null)
             {
                 LoseRestartBtn.Visible = false;
@@ -203,6 +207,26 @@ namespace Breakout_Game
         private void BreakoutForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             e.IsInputKey = true;    //triggers keydown and up events to allow paddle to move
+        }
+
+        private void PlayPauseBtn_Click(object sender, EventArgs e)
+        {
+            //disable then enabling brings focus to form so it can detect keyboard clicks.
+            PlayPauseBtn.Enabled = false;
+            PlayPauseBtn.Enabled = true;
+
+            if (paused)
+            {
+                PlayPauseBtn.Image = Properties.Resources.Pause;
+            }
+            else
+            {
+                PlayPauseBtn.Image = Properties.Resources.Play;
+            }
+
+            paused = !paused;
+            Timer.Enabled = !Timer.Enabled;
+
         }
     }
 }

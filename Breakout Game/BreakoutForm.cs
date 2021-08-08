@@ -211,6 +211,10 @@ namespace Breakout_Game
 
         private void PlayPauseBtn_Click(object sender, EventArgs e)
         {
+            if (lives <= 0)
+            {
+                return;
+            }
             //disable then enabling brings focus to form so it can detect keyboard clicks.
             PlayPauseBtn.Enabled = false;
             PlayPauseBtn.Enabled = true;

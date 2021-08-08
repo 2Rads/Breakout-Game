@@ -6,16 +6,16 @@ namespace Breakout_Game
     {
         public RectangleF block { get; private set; }
         public Color Colour { get; private set; }
+        private readonly int TopGap = 3;
 
         public Block(int column, int row, Size size, int MaxColumn, int MaxRow)
         {
-            int RowMultiplier = size.Height / (MaxRow * 2);//appropriate size for height of a block
-            int ColumnMultiplier = size.Width / MaxColumn;//appropriate size for Width of a block
-
+            int RowMultiplier = size.Height / ((MaxRow + TopGap) * 2); //goes up to half way and leaves a gap of 2 at the top
+            int ColumnMultiplier = size.Width / MaxColumn; //Width of block takes up entire form width
 
             Colour = GetColour(row);
-
-            block = new RectangleF(new PointF(column * (ColumnMultiplier + 1), row * RowMultiplier), new SizeF(ColumnMultiplier, RowMultiplier));
+            //ColumnMultiplier + 1, the + 1 creates a 1 pixel black line so the user can see the end of each block.
+            block = new RectangleF(new PointF(column * (ColumnMultiplier + 1), (row + TopGap) * RowMultiplier), new SizeF(ColumnMultiplier, RowMultiplier));
         }
         private static Color GetColour(int row)
         {

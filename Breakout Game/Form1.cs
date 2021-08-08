@@ -81,7 +81,7 @@ namespace Breakout_Game
         }
         private void DetectBallPaddleCollision()
         {
-            if (ball.ball.IntersectsWith(paddle.paddle) && /*ball.ball.Bottom <= paddle.paddle.Top &&*/ ball.velocity.Y > 0)
+            if (ball.ball.IntersectsWith(paddle.paddle) && ball.velocity.Y > 0)
             {
 
                 float BallCentre = ball.ball.X + ball.ball.Width / 2;
@@ -108,11 +108,15 @@ namespace Breakout_Game
                 LivesLbl.Text = $"Lives: {lives}";
                 if (lives <= 0)
                 {
-                    lives++;//keeps lives at 0, remove with lose screen
-                    return;//make lose screen;
+                    LoseScreen();
                 }
                 ball = new Ball(DisplayBox.Size);
             }
+        }
+        private void LoseScreen()
+        {
+            ball = null;
+            Timer.Enabled = false;
         }
         private void DetectBallBlockCollision()
         {
@@ -120,7 +124,7 @@ namespace Breakout_Game
             {
                 for (int j = 0; j < ROW; j++)
                 {
-                    if (blocks[i, j] != null )
+                    if (blocks[i, j] != null)
                     {
                         RectangleF intersection = RectangleF.Intersect(ball.ball, blocks[i, j].block);
                         if (intersection.IsEmpty)

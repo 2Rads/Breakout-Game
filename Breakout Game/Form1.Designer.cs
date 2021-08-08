@@ -38,6 +38,7 @@ namespace Breakout_Game
             // 
             // DisplayBox
             // 
+            this.DisplayBox.BackColor = System.Drawing.Color.Black;
             this.DisplayBox.Location = new System.Drawing.Point(12, 49);
             this.DisplayBox.Name = "DisplayBox";
             this.DisplayBox.Size = new System.Drawing.Size(1040, 620);
@@ -55,11 +56,11 @@ namespace Breakout_Game
             // 
             this.LivesLbl.AutoSize = true;
             this.LivesLbl.BackColor = System.Drawing.Color.Transparent;
-            this.LivesLbl.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LivesLbl.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LivesLbl.ForeColor = System.Drawing.Color.White;
-            this.LivesLbl.Location = new System.Drawing.Point(12, 9);
+            this.LivesLbl.Location = new System.Drawing.Point(12, 3);
             this.LivesLbl.Name = "LivesLbl";
-            this.LivesLbl.Size = new System.Drawing.Size(103, 37);
+            this.LivesLbl.Size = new System.Drawing.Size(122, 45);
             this.LivesLbl.TabIndex = 0;
             this.LivesLbl.Text = "Lives: 5";
             // 
@@ -67,7 +68,7 @@ namespace Breakout_Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(1064, 681);
             this.Controls.Add(this.LivesLbl);
             this.Controls.Add(this.DisplayBox);

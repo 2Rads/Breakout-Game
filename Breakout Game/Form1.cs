@@ -9,6 +9,7 @@ namespace Breakout_Game
         private readonly int ROW = 8;
         private readonly int COLUMN = 10;
         private int lives = 5;
+        private int score;
 
         private bool LEFT = false;
         private bool RIGHT = false;
@@ -30,6 +31,7 @@ namespace Breakout_Game
                     blocks[i, j] = new Block(i, j, DisplayBox.Size, COLUMN, ROW);
                 }
             }
+            score = 0;
             paddle = new Paddle(DisplayBox.Size);
             ball = new Ball(DisplayBox.Size);
         }
@@ -118,9 +120,8 @@ namespace Breakout_Game
             {
                 for (int j = 0; j < ROW; j++)
                 {
-                    if (blocks[i, j] != null /*&& ball.ball.IntersectsWith(blocks[i, j].block)*/)
+                    if (blocks[i, j] != null )
                     {
-
                         RectangleF intersection = RectangleF.Intersect(ball.ball, blocks[i, j].block);
                         if (intersection.IsEmpty)
                         {
@@ -128,74 +129,24 @@ namespace Breakout_Game
                         }
                         if (intersection.Height > intersection.Width)
                         {
-
-                            if (ball.ball.Right == intersection.Right && ball.velocity.X > 0)
+                            if (ball.ball.Right == intersection.Right && ball.velocity.X > 0 || ball.ball.Left == intersection.Left && ball.velocity.X < 0)
                             {
                                 ball.ChangeDirection(1, 0);
                                 blocks[i, j] = null;
-                            }
-                            else if (ball.ball.Left == intersection.Left && ball.velocity.X < 0)
-                            {
-                                ball.ChangeDirection(1, 0);
-                                blocks[i, j] = null;
+                                score++;
+                                ScoreLbl.Text = $"Score: {score}";
                             }
                         }
                         else
                         {
-                            if (ball.ball.Top == intersection.Top && ball.velocity.Y < 0)
+                            if (ball.ball.Top == intersection.Top && ball.velocity.Y < 0 || ball.ball.Bottom == intersection.Bottom && ball.velocity.Y > 0)
                             {
                                 ball.ChangeDirection(0, 1);
                                 blocks[i, j] = null;
-                            }
-                            else if (ball.ball.Bottom == intersection.Bottom && ball.velocity.Y > 0)
-                            {
-                                ball.ChangeDirection(0, 1);
-                                blocks[i, j] = null;
+                                score++;
+                                ScoreLbl.Text = $"Score: {score}";
                             }
                         }
-                        //if (ball.ball.Top == intersection.Top && ball.velocity.Y < 0)
-                        //{
-                        //    ball.ChangeDirection(0, 1);
-                        //    blocks[i, j] = null;
-                        //}
-                        //if (ball.ball.Bottom == intersection.Bottom && ball.velocity.Y > 0)
-                        //{
-                        //    ball.ChangeDirection(0, 1);
-                        //    blocks[i, j] = null;
-                        //}
-                        //if (ball.ball.Right == intersection.Right && ball.velocity.X > 0)
-                        //{
-                        //    ball.ChangeDirection(1, 0);
-                        //    blocks[i, j] = null;
-                        //}
-                        //if (ball.ball.Left == intersection.Left && ball.velocity.X < 0)
-                        //{
-                        //    ball.ChangeDirection(1, 0);
-                        //    blocks[i, j] = null;
-                        //}
-
-
-
-                        //if(ball.ball.Bottom >= blocks[i, j].block.Top && ball.velocity.Y>0)
-                        //{
-                        //    ball.ChangeDirection(0, 1);
-                        //    blocks[i, j] = null;
-                        //}
-                        //else if (ball.ball.Top <= blocks[i, j].block.Bottom && ball.velocity.Y < 0)
-                        //{
-                        //    ball.ChangeDirection(0, 1);
-                        //    blocks[i, j] = null;
-                        //}
-                        //else if (ball.ball.Right >= blocks[i, j].block.Left && ball.velocity.X>0)
-                        //{
-                        //    ball.ChangeDirection(1, 0);
-                        //    blocks[i, j] = null;
-                        //}
-                        //else if (ball.ball.Left <= blocks[i, j].block.Right && ball.velocity.X < 0)
-                        //{
-                        //    ball.ChangeDirection(1, 0);
-                        //    blocks[i, j] = null;
-                        //}
                     }
                 }
             }

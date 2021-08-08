@@ -33,6 +33,7 @@ namespace Breakout_Game
             this.DisplayBox = new System.Windows.Forms.PictureBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.LivesLbl = new System.Windows.Forms.Label();
+            this.ScoreLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DisplayBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,11 +59,23 @@ namespace Breakout_Game
             this.LivesLbl.BackColor = System.Drawing.Color.Transparent;
             this.LivesLbl.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.LivesLbl.ForeColor = System.Drawing.Color.White;
-            this.LivesLbl.Location = new System.Drawing.Point(12, 3);
+            this.LivesLbl.Location = new System.Drawing.Point(12, 1);
             this.LivesLbl.Name = "LivesLbl";
             this.LivesLbl.Size = new System.Drawing.Size(122, 45);
             this.LivesLbl.TabIndex = 0;
             this.LivesLbl.Text = "Lives: 5";
+            // 
+            // ScoreLbl
+            // 
+            this.ScoreLbl.AutoSize = true;
+            this.ScoreLbl.BackColor = System.Drawing.Color.Transparent;
+            this.ScoreLbl.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ScoreLbl.ForeColor = System.Drawing.Color.White;
+            this.ScoreLbl.Location = new System.Drawing.Point(902, 1);
+            this.ScoreLbl.Name = "ScoreLbl";
+            this.ScoreLbl.Size = new System.Drawing.Size(132, 45);
+            this.ScoreLbl.TabIndex = 0;
+            this.ScoreLbl.Text = "Score: 0";
             // 
             // BreakoutForm
             // 
@@ -70,6 +83,7 @@ namespace Breakout_Game
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(1064, 681);
+            this.Controls.Add(this.ScoreLbl);
             this.Controls.Add(this.LivesLbl);
             this.Controls.Add(this.DisplayBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -90,6 +104,7 @@ namespace Breakout_Game
         private System.Windows.Forms.PictureBox DisplayBox;
         private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Label LivesLbl;
+        private System.Windows.Forms.Label ScoreLbl;
     }
 }
 

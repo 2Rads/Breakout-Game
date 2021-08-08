@@ -34,6 +34,7 @@ namespace Breakout_Game
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.LivesLbl = new System.Windows.Forms.Label();
             this.ScoreLbl = new System.Windows.Forms.Label();
+            this.RestartBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DisplayBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,12 +78,26 @@ namespace Breakout_Game
             this.ScoreLbl.TabIndex = 0;
             this.ScoreLbl.Text = "Score: 0";
             // 
+            // RestartBtn
+            // 
+            this.RestartBtn.BackColor = System.Drawing.Color.Transparent;
+            this.RestartBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.RestartBtn.Image = global::Breakout_Game.Properties.Resources.RestartIcon;
+            this.RestartBtn.Location = new System.Drawing.Point(635, 1);
+            this.RestartBtn.Name = "RestartBtn";
+            this.RestartBtn.Size = new System.Drawing.Size(51, 48);
+            this.RestartBtn.TabIndex = 0;
+            this.RestartBtn.TabStop = false;
+            this.RestartBtn.UseVisualStyleBackColor = false;
+            this.RestartBtn.Click += new System.EventHandler(this.RestartBtn_Click);
+            // 
             // BreakoutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1064, 681);
+            this.Controls.Add(this.RestartBtn);
             this.Controls.Add(this.ScoreLbl);
             this.Controls.Add(this.LivesLbl);
             this.Controls.Add(this.DisplayBox);
@@ -93,6 +108,7 @@ namespace Breakout_Game
             this.Text = "Breakout Game";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BreakoutForm_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BreakoutForm_KeyUp);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.BreakoutForm_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.DisplayBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -105,6 +121,7 @@ namespace Breakout_Game
         private System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.Label LivesLbl;
         private System.Windows.Forms.Label ScoreLbl;
+        private System.Windows.Forms.Button RestartBtn;
     }
 }
 

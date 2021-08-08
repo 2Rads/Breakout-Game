@@ -158,7 +158,6 @@ namespace Breakout_Game
         {
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
-                
                 RIGHT = false;
             }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
@@ -169,6 +168,10 @@ namespace Breakout_Game
 
         private void RestartBtn_Click(object sender, EventArgs e)
         {
+            //disable then enabling brings focus to form so it can detect keyboard clicks.
+            RestartBtn.Enabled = false;
+            RestartBtn.Enabled = true;
+
             LoadDefault();
         }
         private void LoadDefault()
@@ -190,10 +193,16 @@ namespace Breakout_Game
             if (LoseRestartBtn != null)
             {
                 LoseRestartBtn.Visible = false;
+                LoseRestartBtn.Enabled = false;
             }
             ScoreLbl.Text = "Score: 0";
             LivesLbl.Text = $"Lives: {lives}";
 
+        }
+
+        private void BreakoutForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            e.IsInputKey = true;    //triggers keydown and up events to allow paddle to move
         }
     }
 }

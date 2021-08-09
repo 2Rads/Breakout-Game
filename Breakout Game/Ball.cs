@@ -7,24 +7,25 @@ namespace Breakout_Game
     {
         public RectangleF ball { get; private set; }    //treating ball as rectangle, helps with collision detection.
         public PointF velocity { get; private set; }
+        private readonly int Diameter = 30;
         public Ball(Size size)
         {
-            ball = new RectangleF(new PointF(size.Width / 2 - 15, size.Height / 2), new SizeF(30, 30));
+            ball = new RectangleF(new PointF((size.Width - Diameter) / 2 , size.Height / 2), new SizeF(Diameter, Diameter));
 
-            velocity = new PointF(2, 2);//default speed is 2 in x, 2 in y.
+            velocity = new PointF(2, 2);//start speed is 2 in x, 2 in y.
         }
         public void move()
         {
-            ball = new RectangleF(new PointF(ball.X + velocity.X, ball.Y + velocity.Y), new SizeF(30, 30));
+            ball = new RectangleF(new PointF(ball.X + velocity.X, ball.Y + velocity.Y), new SizeF(Diameter, Diameter));
         }
-        public void ChangeDirection(int x, int y)
+        public void ChangeDirection(bool x, bool y)
         {
-            //1 means change direction, 0 means don't change dirction
-            if (x == 1)
+            //true means reflect in that axis.
+            if (x)
             {
                 velocity = new PointF(-velocity.X, velocity.Y);
             }
-            if (y == 1)
+            if (y)
             {
                 velocity = new PointF(velocity.X, -velocity.Y);
             }

@@ -89,11 +89,11 @@ namespace Breakout_Game
         {
             if (ball.ball.Left <= 0 || ball.ball.Right >= DisplayBox.Right - 11)//-11 as boundary error with right side of wall
             {
-                ball.ChangeDirection(1, 0);
+                ball.ChangeDirection(true, false);
             }
             if (ball.ball.Top <= 0)
             {
-                ball.ChangeDirection(0, 1);
+                ball.ChangeDirection(false, true);
             }
             if (ball.IsOffScreen(DisplayBox.Size.Height))
             {
@@ -141,7 +141,7 @@ namespace Breakout_Game
                         {
                             if (ball.ball.Right == intersection.Right && ball.velocity.X > 0 || ball.ball.Left == intersection.Left && ball.velocity.X < 0)
                             {
-                                ball.ChangeDirection(1, 0);
+                                ball.ChangeDirection(true, false);
                                 blocks[i, j] = null;
                                 score++;
                                 ScoreLbl.Text = $"Score: {score}";
@@ -151,7 +151,7 @@ namespace Breakout_Game
                         {
                             if (ball.ball.Top == intersection.Top && ball.velocity.Y < 0 || ball.ball.Bottom == intersection.Bottom && ball.velocity.Y > 0)
                             {
-                                ball.ChangeDirection(0, 1);
+                                ball.ChangeDirection(false, true);
                                 blocks[i, j] = null;
                                 score++;
                                 ScoreLbl.Text = $"Score: {score}";
@@ -189,7 +189,7 @@ namespace Breakout_Game
         private void LoadDefault()
         {
             blocks = new Block[COLUMN, ROW];
-            //creates 8 rows with 15 columns
+            //creates ROW and COLUMN in 2D array.
             for (int i = 0; i < COLUMN; i++)
             {
                 for (int j = 0; j < ROW; j++)

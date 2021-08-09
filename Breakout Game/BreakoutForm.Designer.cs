@@ -31,6 +31,7 @@ namespace Breakout_Game
         {
             this.components = new System.ComponentModel.Container();
             this.DisplayBox = new System.Windows.Forms.PictureBox();
+            this.WinLbl = new System.Windows.Forms.Label();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.LivesLbl = new System.Windows.Forms.Label();
             this.ScoreLbl = new System.Windows.Forms.Label();
@@ -48,6 +49,19 @@ namespace Breakout_Game
             this.DisplayBox.TabIndex = 0;
             this.DisplayBox.TabStop = false;
             this.DisplayBox.Paint += new System.Windows.Forms.PaintEventHandler(this.DisplayBox_Paint);
+            // 
+            // WinLbl
+            // 
+            this.WinLbl.BackColor = System.Drawing.Color.Black;
+            this.WinLbl.Font = new System.Drawing.Font("Segoe UI", 80F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.WinLbl.ForeColor = System.Drawing.Color.White;
+            this.WinLbl.Location = new System.Drawing.Point(300, 148);
+            this.WinLbl.Name = "WinLbl";
+            this.WinLbl.Size = new System.Drawing.Size(486, 148);
+            this.WinLbl.TabIndex = 2;
+            this.WinLbl.Text = "You Win";
+            this.WinLbl.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.WinLbl.Visible = false;
             // 
             // Timer
             // 
@@ -84,7 +98,7 @@ namespace Breakout_Game
             this.RestartBtn.BackColor = System.Drawing.Color.Transparent;
             this.RestartBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.RestartBtn.Image = global::Breakout_Game.Properties.Resources.RestartIcon;
-            this.RestartBtn.Location = new System.Drawing.Point(566, 1);
+            this.RestartBtn.Location = new System.Drawing.Point(536, 1);
             this.RestartBtn.Name = "RestartBtn";
             this.RestartBtn.Size = new System.Drawing.Size(51, 48);
             this.RestartBtn.TabIndex = 0;
@@ -97,7 +111,7 @@ namespace Breakout_Game
             this.PlayPauseBtn.BackColor = System.Drawing.Color.Transparent;
             this.PlayPauseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.PlayPauseBtn.Image = global::Breakout_Game.Properties.Resources.Pause;
-            this.PlayPauseBtn.Location = new System.Drawing.Point(509, 1);
+            this.PlayPauseBtn.Location = new System.Drawing.Point(479, 1);
             this.PlayPauseBtn.Name = "PlayPauseBtn";
             this.PlayPauseBtn.Size = new System.Drawing.Size(51, 48);
             this.PlayPauseBtn.TabIndex = 1;
@@ -111,6 +125,7 @@ namespace Breakout_Game
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1064, 681);
+            this.Controls.Add(this.WinLbl);
             this.Controls.Add(this.PlayPauseBtn);
             this.Controls.Add(this.RestartBtn);
             this.Controls.Add(this.ScoreLbl);
@@ -138,6 +153,7 @@ namespace Breakout_Game
         private System.Windows.Forms.Label ScoreLbl;
         private System.Windows.Forms.Button RestartBtn;
         private System.Windows.Forms.Button PlayPauseBtn;
+        private System.Windows.Forms.Label WinLbl;
     }
 }
 

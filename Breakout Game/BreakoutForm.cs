@@ -6,8 +6,8 @@ namespace Breakout_Game
 {
     public partial class BreakoutForm : Form
     {
-        private readonly int ROW = 2;
-        private readonly int COLUMN = 2;
+        private readonly int ROW = 8;
+        private readonly int COLUMN = 10;
         private int lives;
         private int score;
         private bool paused = false;
@@ -17,6 +17,7 @@ namespace Breakout_Game
         private bool RIGHT = false;
 
         Button LoseRestartBtn;
+
         private Block[,] blocks;
         private Paddle paddle;
         private Ball ball;
@@ -100,12 +101,12 @@ namespace Breakout_Game
                 LivesLbl.Text = $"Lives: {lives}";
                 if (lives <= 0)
                 {
-                    LoseScreen();
+                    EndScreen(false);
                 }
                 ball = new Ball(DisplayBox.Size);
             }
         }
-        private void LoseScreen()
+        private void EndScreen(bool win)
         {
             EndGame = true;
             Timer.Enabled = false;
@@ -114,19 +115,9 @@ namespace Breakout_Game
             LoseRestartBtn.Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height);
             LoseRestartBtn.Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2;
             LoseRestartBtn.Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2;
-            //LoseRestartBtn.Visible = true;
-            DisplayBox.Controls.Add(LoseRestartBtn);
-            LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
-        }
-        private void WinScreen()
-        {
-            EndGame = true;
-            Timer.Enabled = false;
-            LoseRestartBtn = new Button();
-            LoseRestartBtn.Image = Properties.Resources.RestartImg;
-            LoseRestartBtn.Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height);
-            LoseRestartBtn.Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2;
-            LoseRestartBtn.Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2;
+
+            WinLbl.Text = win ? "You Win" : "You Lose";
+            WinLbl.Visible = true;
 
             DisplayBox.Controls.Add(LoseRestartBtn);
             LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
@@ -171,7 +162,7 @@ namespace Breakout_Game
             }
             if (BlocksLeft == 0)
             {
-                WinScreen();
+                EndScreen(true);
             }
         }
 
@@ -219,6 +210,7 @@ namespace Breakout_Game
                 LoseRestartBtn.Visible = false;
                 LoseRestartBtn.Enabled = false;
             }
+            WinLbl.Visible = false;
             ScoreLbl.Text = "Score: 0";
             LivesLbl.Text = $"Lives: {lives}";
         }

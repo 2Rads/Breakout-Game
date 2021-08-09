@@ -222,13 +222,13 @@ namespace Breakout_Game
         {
             EndGame = true;
             Timer.Enabled = false;
-            LoseRestartBtn = new Button
-            {
-                Image = Properties.Resources.RestartImg,
-                Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height),
-                Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2,
-                Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2,
-            };
+
+            LoseRestartBtn = new Button();
+            LoseRestartBtn.Image = Properties.Resources.RestartImg;
+            LoseRestartBtn.Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height);
+            LoseRestartBtn.Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2;
+            LoseRestartBtn.Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2;
+
             WinLbl.Text = win ? "You Win" : "You Lose";
             WinLbl.Visible = true;
 

@@ -19,7 +19,7 @@ namespace Breakout_Game
         }
         private static Color GetColour(int row)
         {
-            switch (row)
+            switch (row%8)
             {
                 case 0:
                     return Color.Pink;

@@ -65,6 +65,7 @@ namespace Breakout_Game
             DetectBallPaddleCollision();
             DetectBallAndEdges();
             ball.move();
+            ball.IncreaseSpeed();
 
             if (LEFT) paddle.move(-1, DisplayBox);
             if (RIGHT) paddle.move(1, DisplayBox);

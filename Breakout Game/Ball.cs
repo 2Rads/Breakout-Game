@@ -8,6 +8,8 @@ namespace Breakout_Game
         public RectangleF ball { get; private set; }    //treating ball as rectangle, helps with collision detection.
         public PointF velocity { get; private set; }
         private readonly int Diameter = 30;
+        private readonly int MaxSpeed = 10;
+        private readonly float SpeedIncrement = 1.005f;
         public Ball(Size size)
         {
             ball = new RectangleF(new PointF((size.Width - Diameter) / 2 , size.Height / 2), new SizeF(Diameter, Diameter));
@@ -32,8 +34,7 @@ namespace Breakout_Game
         }
         public void ChangeAngle(float ratio)
         {
-            double speed = GetSpeed(velocity.X, velocity.Y) * 1.1;
-            speed = Math.Min(speed, 10);
+            double speed = GetSpeed(velocity.X, velocity.Y);
 
             double angle = Math.PI * ratio * 70 / 180.0;
             double cosangle = -Math.Cos(angle);
@@ -49,6 +50,13 @@ namespace Breakout_Game
             else
             {
                 velocity = new PointF((float)(sinangle * speed), (float)(cosangle * speed));
+            }
+        }
+        public void IncreaseSpeed()
+        {
+            if (!(GetSpeed(velocity.X, velocity.Y) >= MaxSpeed))
+            {
+                velocity = new PointF(velocity.X*SpeedIncrement, velocity.Y*SpeedIncrement);
             }
         }
         private static double GetSpeed(float x, float y)

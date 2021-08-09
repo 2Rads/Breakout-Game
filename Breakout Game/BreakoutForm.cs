@@ -52,11 +52,11 @@ namespace Breakout_Game
             DetectBallBlockCollision();
             DetectBallPaddleCollision();
             DetectBallAndEdges();
-            ball.move();
+            ball.Move();
             ball.IncreaseSpeed();
 
-            if (LEFT) paddle.move(-1, DisplayBox);
-            if (RIGHT) paddle.move(1, DisplayBox);
+            if (LEFT) paddle.Move(-1, DisplayBox);
+            if (RIGHT) paddle.Move(1, DisplayBox);
 
             DisplayBox.Invalidate();
             DisplayBox.Update();
@@ -71,34 +71,34 @@ namespace Breakout_Game
                     if (blocks[i, j] != null)
                     {
                         brush = new SolidBrush(blocks[i, j].Colour);
-                        e.Graphics.FillRectangle(brush, blocks[i, j].block);
+                        e.Graphics.FillRectangle(brush, blocks[i, j].Rectangle);
                     }
                 }
             }
             brush = new SolidBrush(Color.White);
-            e.Graphics.FillRectangle(brush, paddle.paddle);
-            e.Graphics.FillEllipse(brush, ball.ball);
+            e.Graphics.FillRectangle(brush, paddle.Rectangle);
+            e.Graphics.FillEllipse(brush, ball.Rectangle);
         }
 
         private void DetectBallPaddleCollision()
         {
-            if (ball.ball.IntersectsWith(paddle.paddle) && ball.velocity.Y > 0)
+            if (ball.Rectangle.IntersectsWith(paddle.Rectangle) && ball.Velocity.Y > 0)
             {
-                float BallCentre = ball.ball.X + ball.ball.Width / 2;
-                float PaddleCentre = paddle.paddle.X + paddle.paddle.Width / 2;
+                float BallCentre = ball.Rectangle.X + ball.Rectangle.Width / 2;
+                float PaddleCentre = paddle.Rectangle.X + paddle.Rectangle.Width / 2;
 
-                float ratio = (BallCentre - PaddleCentre) / (paddle.paddle.Width / 2);
+                float ratio = (BallCentre - PaddleCentre) / (paddle.Rectangle.Width / 2);
 
                 ball.ChangeAngle(ratio);
             }
         }
         private void DetectBallAndEdges()
         {
-            if (ball.ball.Left <= 0 || ball.ball.Right >= DisplayBox.Right - 11)//-11 as boundary error with right side of wall
+            if (ball.Rectangle.Left <= 0 || ball.Rectangle.Right >= DisplayBox.Right - 11)//-11 as boundary error with right side of wall
             {
                 ball.ChangeDirection(true, false);
             }
-            if (ball.ball.Top <= 0)
+            if (ball.Rectangle.Top <= 0)
             {
                 ball.ChangeDirection(false, true);
             }
@@ -123,14 +123,14 @@ namespace Breakout_Game
                     if (blocks[i, j] != null)
                     {
                         BlocksLeft = true;
-                        RectangleF intersection = RectangleF.Intersect(ball.ball, blocks[i, j].block);
+                        RectangleF intersection = RectangleF.Intersect(ball.Rectangle, blocks[i, j].Rectangle);
                         if (intersection.IsEmpty)
                         {
                             continue;
                         }
                         if (intersection.Height > intersection.Width)
                         {
-                            if (ball.ball.Right == intersection.Right && ball.velocity.X > 0 || ball.ball.Left == intersection.Left && ball.velocity.X < 0)
+                            if (ball.Rectangle.Right == intersection.Right && ball.Velocity.X > 0 || ball.Rectangle.Left == intersection.Left && ball.Velocity.X < 0)
                             {
                                 ball.ChangeDirection(true, false);
                                 DestroyBlock(i, j);
@@ -138,7 +138,7 @@ namespace Breakout_Game
                         }
                         else
                         {
-                            if (ball.ball.Top == intersection.Top && ball.velocity.Y < 0 || ball.ball.Bottom == intersection.Bottom && ball.velocity.Y > 0)
+                            if (ball.Rectangle.Top == intersection.Top && ball.Velocity.Y < 0 || ball.Rectangle.Bottom == intersection.Bottom && ball.Velocity.Y > 0)
                             {
                                 ball.ChangeDirection(false, true);
                                 DestroyBlock(i, j);

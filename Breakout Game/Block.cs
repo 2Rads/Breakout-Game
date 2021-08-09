@@ -4,7 +4,7 @@ namespace Breakout_Game
 {
     public class Block
     {
-        public RectangleF block { get; private set; }
+        public RectangleF Rectangle { get; private set; }
         public Color Colour { get; private set; }
         private readonly int TopGap = 3;
 
@@ -15,7 +15,7 @@ namespace Breakout_Game
 
             Colour = GetColour(row);
             //ColumnMultiplier + 1, the + 1 creates a 1 pixel black line so the user can see the end of each block.
-            block = new RectangleF(new PointF(column * (ColumnMultiplier + 1), (row + TopGap) * RowMultiplier), new SizeF(ColumnMultiplier, RowMultiplier));
+            Rectangle = new RectangleF(new PointF(column * (ColumnMultiplier + 1), (row + TopGap) * RowMultiplier), new SizeF(ColumnMultiplier, RowMultiplier));
         }
         private static Color GetColour(int row)
         {

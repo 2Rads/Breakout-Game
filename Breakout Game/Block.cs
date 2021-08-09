@@ -39,5 +39,19 @@ namespace Breakout_Game
                     return Color.Aqua;
             }
         }
+
+        public static Block[,] CreateArray(Size size, int COLUMN, int ROW)
+        {
+            Block[,] blocks = new Block[COLUMN, ROW];
+            //creates ROW and COLUMN in 2D array.
+            for (int i = 0; i < COLUMN; i++)
+            {
+                for (int j = 0; j < ROW; j++)
+                {
+                    blocks[i, j] = new Block(i, j, size, COLUMN, ROW);
+                }
+            }
+            return blocks;
+        }
     }
 }

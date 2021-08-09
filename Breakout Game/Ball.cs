@@ -12,7 +12,7 @@ namespace Breakout_Game
         private readonly float SpeedIncrement = 1.005f;
         public Ball(Size size)
         {
-            ball = new RectangleF(new PointF((size.Width - Diameter) / 2 , size.Height / 2), new SizeF(Diameter, Diameter));
+            ball = new RectangleF(new PointF((size.Width - Diameter) / 2, size.Height / 2), new SizeF(Diameter, Diameter));
 
             velocity = new PointF(2, 2);//start speed is 2 in x, 2 in y.
         }
@@ -56,7 +56,7 @@ namespace Breakout_Game
         {
             if (!(GetSpeed(velocity.X, velocity.Y) >= MaxSpeed))
             {
-                velocity = new PointF(velocity.X*SpeedIncrement, velocity.Y*SpeedIncrement);
+                velocity = new PointF(velocity.X * SpeedIncrement, velocity.Y * SpeedIncrement);
             }
         }
         private static double GetSpeed(float x, float y)

@@ -25,8 +25,41 @@ namespace Breakout_Game
         public BreakoutForm()
         {
             InitializeComponent();
-
             LoadDefault();
+        }
+        private void LoadDefault()
+        {
+            score = 0;
+            lives = 5;
+            blocks = Block.CreateArray(DisplayBox.Size, COLUMN, ROW);
+            paddle = new Paddle(DisplayBox.Size);
+            ball = new Ball(DisplayBox.Size);
+            Timer.Enabled = true;
+            PlayPauseBtn.Image = Properties.Resources.Pause;
+            paused = false;
+            EndGame = false;
+            if (LoseRestartBtn != null)
+            {
+                LoseRestartBtn.Visible = false;
+                LoseRestartBtn.Enabled = false;
+            }
+            WinLbl.Visible = false;
+            ScoreLbl.Text = "Score: 0";
+            LivesLbl.Text = $"Lives: {lives}";
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            DetectBallBlockCollision();
+            DetectBallPaddleCollision();
+            DetectBallAndEdges();
+            ball.move();
+            ball.IncreaseSpeed();
+
+            if (LEFT) paddle.move(-1, DisplayBox);
+            if (RIGHT) paddle.move(1, DisplayBox);
+
+            DisplayBox.Invalidate();
+            DisplayBox.Update();
         }
         private void DisplayBox_Paint(object sender, PaintEventArgs e)
         {
@@ -47,37 +80,10 @@ namespace Breakout_Game
             e.Graphics.FillEllipse(brush, ball.ball);
         }
 
-        private void BreakoutForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
-            {
-                RIGHT = true;
-            }
-            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
-            {
-                LEFT = true;
-            }
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            DetectBallBlockCollision();
-            DetectBallPaddleCollision();
-            DetectBallAndEdges();
-            ball.move();
-            ball.IncreaseSpeed();
-
-            if (LEFT) paddle.move(-1, DisplayBox);
-            if (RIGHT) paddle.move(1, DisplayBox);
-
-            DisplayBox.Invalidate();
-            DisplayBox.Update();
-        }
         private void DetectBallPaddleCollision()
         {
             if (ball.ball.IntersectsWith(paddle.paddle) && ball.velocity.Y > 0)
             {
-
                 float BallCentre = ball.ball.X + ball.ball.Width / 2;
                 float PaddleCentre = paddle.paddle.X + paddle.paddle.Width / 2;
 
@@ -107,32 +113,16 @@ namespace Breakout_Game
                 ball = new Ball(DisplayBox.Size);
             }
         }
-        private void EndScreen(bool win)
-        {
-            EndGame = true;
-            Timer.Enabled = false;
-            LoseRestartBtn = new Button();
-            LoseRestartBtn.Image = Properties.Resources.RestartImg;
-            LoseRestartBtn.Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height);
-            LoseRestartBtn.Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2;
-            LoseRestartBtn.Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2;
-
-            WinLbl.Text = win ? "You Win" : "You Lose";
-            WinLbl.Visible = true;
-
-            DisplayBox.Controls.Add(LoseRestartBtn);
-            LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
-        }
         private void DetectBallBlockCollision()
         {
-            int BlocksLeft = 0;
+            bool BlocksLeft = false;
             for (int i = 0; i < COLUMN; i++)
             {
                 for (int j = 0; j < ROW; j++)
                 {
                     if (blocks[i, j] != null)
                     {
-                        BlocksLeft++;
+                        BlocksLeft = true;
                         RectangleF intersection = RectangleF.Intersect(ball.ball, blocks[i, j].block);
                         if (intersection.IsEmpty)
                         {
@@ -143,9 +133,7 @@ namespace Breakout_Game
                             if (ball.ball.Right == intersection.Right && ball.velocity.X > 0 || ball.ball.Left == intersection.Left && ball.velocity.X < 0)
                             {
                                 ball.ChangeDirection(true, false);
-                                blocks[i, j] = null;
-                                score++;
-                                ScoreLbl.Text = $"Score: {score}";
+                                DestroyBlock(i, j);
                             }
                         }
                         else
@@ -153,20 +141,35 @@ namespace Breakout_Game
                             if (ball.ball.Top == intersection.Top && ball.velocity.Y < 0 || ball.ball.Bottom == intersection.Bottom && ball.velocity.Y > 0)
                             {
                                 ball.ChangeDirection(false, true);
-                                blocks[i, j] = null;
-                                score++;
-                                ScoreLbl.Text = $"Score: {score}";
+                                DestroyBlock(i, j);
                             }
                         }
                     }
                 }
             }
-            if (BlocksLeft == 0)
+            if (!BlocksLeft)
             {
                 EndScreen(true);
             }
         }
+        private void DestroyBlock(int i, int j)
+        {
+            blocks[i, j] = null;
+            score++;
+            ScoreLbl.Text = $"Score: {score}";
+        }
 
+        private void BreakoutForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                RIGHT = true;
+            }
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+            {
+                LEFT = true;
+            }
+        }
         private void BreakoutForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
@@ -178,6 +181,10 @@ namespace Breakout_Game
                 LEFT = false;
             }
         }
+        private void BreakoutForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            e.IsInputKey = true;    //triggers keydown and up events to allow paddle to move
+        }
 
         private void RestartBtn_Click(object sender, EventArgs e)
         {
@@ -187,40 +194,6 @@ namespace Breakout_Game
 
             LoadDefault();
         }
-        private void LoadDefault()
-        {
-            blocks = new Block[COLUMN, ROW];
-            //creates ROW and COLUMN in 2D array.
-            for (int i = 0; i < COLUMN; i++)
-            {
-                for (int j = 0; j < ROW; j++)
-                {
-                    blocks[i, j] = new Block(i, j, DisplayBox.Size, COLUMN, ROW);
-                }
-            }
-            score = 0;
-            lives = 5;
-            paddle = new Paddle(DisplayBox.Size);
-            ball = new Ball(DisplayBox.Size);
-            Timer.Enabled = true;
-            PlayPauseBtn.Image = Properties.Resources.Pause;
-            paused = false;
-            EndGame = false;
-            if (LoseRestartBtn != null)
-            {
-                LoseRestartBtn.Visible = false;
-                LoseRestartBtn.Enabled = false;
-            }
-            WinLbl.Visible = false;
-            ScoreLbl.Text = "Score: 0";
-            LivesLbl.Text = $"Lives: {lives}";
-        }
-
-        private void BreakoutForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            e.IsInputKey = true;    //triggers keydown and up events to allow paddle to move
-        }
-
         private void PlayPauseBtn_Click(object sender, EventArgs e)
         {
             if (EndGame)
@@ -243,6 +216,24 @@ namespace Breakout_Game
             paused = !paused;
             Timer.Enabled = !Timer.Enabled;
 
+        }
+
+        private void EndScreen(bool win)
+        {
+            EndGame = true;
+            Timer.Enabled = false;
+            LoseRestartBtn = new Button
+            {
+                Image = Properties.Resources.RestartImg,
+                Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height),
+                Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2,
+                Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2,
+            };
+            WinLbl.Text = win ? "You Win" : "You Lose";
+            WinLbl.Visible = true;
+
+            DisplayBox.Controls.Add(LoseRestartBtn);
+            LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Breakout_Game
         }
         public void Move()
         {
+            // new position = current position + velocity
             Rectangle = new RectangleF(new PointF(Rectangle.X + Velocity.X, Rectangle.Y + Velocity.Y), new SizeF(Diameter, Diameter));
         }
         public void ChangeDirection(bool x, bool y)
@@ -35,10 +36,11 @@ namespace Breakout_Game
         public void ChangeAngle(float ratio)
         {
             double speed = GetSpeed(Velocity.X, Velocity.Y);
-
-            double angle = Math.PI * ratio * 70 / 180.0;
+            //75 is a constant to change ratio to degrees, then converted to radians.
+            double angle = Math.PI * ratio * 75 / 180.0;
             double cosangle = -Math.Cos(angle);
             double sinangle = Math.Sin(angle);
+            //limit ratio to 0.8 so maximum angle is 60 degrees
             if (ratio > 0.8)
             {
                 Velocity = new PointF((float)(Math.Sqrt(3) * speed / 2), (float)(-speed / 2));

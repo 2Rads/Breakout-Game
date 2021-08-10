@@ -13,10 +13,10 @@ namespace Breakout_Game
         private bool paused = false;
         private bool EndGame = false;
 
-        private bool LEFT = false;
-        private bool RIGHT = false;
+        private bool PADDLELEFT = false;
+        private bool PADDLERIGHT = false;
 
-        Button LoseRestartBtn;
+        Button EndGameRestartBtn;
 
         private Block[,] blocks;
         private Paddle paddle;
@@ -38,10 +38,10 @@ namespace Breakout_Game
             PlayPauseBtn.Image = Properties.Resources.Pause;
             paused = false;
             EndGame = false;
-            if (LoseRestartBtn != null)
+            if (EndGameRestartBtn != null)
             {
-                LoseRestartBtn.Visible = false;
-                LoseRestartBtn.Enabled = false;
+                EndGameRestartBtn.Visible = false;
+                EndGameRestartBtn.Enabled = false;
             }
             WinLbl.Visible = false;
             ScoreLbl.Text = "Score: 0";
@@ -49,14 +49,16 @@ namespace Breakout_Game
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
+            //DetectBall will check and change the direction of the ball.
             DetectBallBlockCollision();
             DetectBallPaddleCollision();
             DetectBallAndEdges();
+
             ball.Move();
             ball.IncreaseSpeed();
 
-            if (LEFT) paddle.Move(-1, DisplayBox);
-            if (RIGHT) paddle.Move(1, DisplayBox);
+            if (PADDLELEFT) paddle.Move(-1, DisplayBox);
+            if (PADDLERIGHT) paddle.Move(1, DisplayBox);
 
             DisplayBox.Invalidate();
             DisplayBox.Update();
@@ -82,6 +84,7 @@ namespace Breakout_Game
 
         private void DetectBallPaddleCollision()
         {
+            //if it detects a collision, it change the angle of the ball depending on where it hit the paddle.
             if (ball.Rectangle.IntersectsWith(paddle.Rectangle) && ball.Velocity.Y > 0)
             {
                 float BallCentre = ball.Rectangle.X + ball.Rectangle.Width / 2;
@@ -94,6 +97,7 @@ namespace Breakout_Game
         }
         private void DetectBallAndEdges()
         {
+            //if it detects a collision, the ball will reflect.
             if (ball.Rectangle.Left <= 0 || ball.Rectangle.Right >= DisplayBox.Right - 11)//-11 as boundary error with right side of wall
             {
                 ball.ChangeDirection(true, false);
@@ -115,6 +119,7 @@ namespace Breakout_Game
         }
         private void DetectBallBlockCollision()
         {
+            //if it detects a collision, the ball will reflect.
             bool BlocksLeft = false;
             for (int i = 0; i < COLUMN; i++)
             {
@@ -147,6 +152,7 @@ namespace Breakout_Game
                     }
                 }
             }
+            //if no blocks are left, it will end the game.
             if (!BlocksLeft)
             {
                 EndScreen(true);
@@ -163,22 +169,22 @@ namespace Breakout_Game
         {
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
-                RIGHT = true;
+                PADDLERIGHT = true;
             }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
-                LEFT = true;
+                PADDLELEFT = true;
             }
         }
         private void BreakoutForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
-                RIGHT = false;
+                PADDLERIGHT = false;
             }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
-                LEFT = false;
+                PADDLELEFT = false;
             }
         }
         private void BreakoutForm_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -223,17 +229,17 @@ namespace Breakout_Game
             EndGame = true;
             Timer.Enabled = false;
 
-            LoseRestartBtn = new Button();
-            LoseRestartBtn.Image = Properties.Resources.RestartImg;
-            LoseRestartBtn.Size = new Size(LoseRestartBtn.Image.Width, LoseRestartBtn.Image.Height);
-            LoseRestartBtn.Left = (DisplayBox.Width - LoseRestartBtn.Width) / 2;
-            LoseRestartBtn.Top = (DisplayBox.Height - LoseRestartBtn.Height) / 2;
+            EndGameRestartBtn = new Button();
+            EndGameRestartBtn.Image = Properties.Resources.RestartImg;
+            EndGameRestartBtn.Size = new Size(EndGameRestartBtn.Image.Width, EndGameRestartBtn.Image.Height);
+            EndGameRestartBtn.Left = (DisplayBox.Width - EndGameRestartBtn.Width) / 2;
+            EndGameRestartBtn.Top = (DisplayBox.Height - EndGameRestartBtn.Height) / 2;
 
             WinLbl.Text = win ? "You Win" : "You Lose";
             WinLbl.Visible = true;
 
-            DisplayBox.Controls.Add(LoseRestartBtn);
-            LoseRestartBtn.Click += new EventHandler(RestartBtn_Click);
+            DisplayBox.Controls.Add(EndGameRestartBtn);
+            EndGameRestartBtn.Click += new EventHandler(RestartBtn_Click);
         }
     }
 }

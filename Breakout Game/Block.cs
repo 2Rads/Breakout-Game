@@ -10,8 +10,8 @@ namespace Breakout_Game
 
         public Block(int column, int row, Size size, int MaxColumn, int MaxRow)
         {
-            int RowMultiplier = size.Height / ((MaxRow + TopGap) * 2); //goes up to half way and leaves a gap of 2 at the top
-            int ColumnMultiplier = size.Width / MaxColumn; //Width of block takes up entire form width
+            int RowMultiplier = size.Height / ((MaxRow + TopGap) * 2); //goes up to half way and leaves a gap of TopGap at the top.
+            int ColumnMultiplier = size.Width / MaxColumn; //Width of block takes up entire form width.
 
             Colour = GetColour(row);
             //ColumnMultiplier + 1, the + 1 creates a 1 pixel black line so the user can see the end of each block.
